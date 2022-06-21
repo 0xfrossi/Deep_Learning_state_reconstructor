@@ -1,0 +1,23 @@
+input_size = 340 #costante
+
+#Scelti casulmente al momento.... da rivedere come prima modifica forse
+hidden_size = 170
+#hidden_size2 = 85
+code_size = 85
+
+input_layer = Input(shape=(input_size,))
+hidden_1 = Dense(hidden_size, activation='relu', kernel_initializer="he_uniform")(input_layer)
+#hidden_3 = Dense(hidden_size, activation='relu', kernel_initializer="he_uniform")(hidden_1)
+
+code = Dense(code_size, activation='relu',kernel_initializer="he_uniform")(hidden_1)
+
+hidden_2 =Dense(hidden_size, activation='relu',kernel_initializer="he_uniform")(code)
+#hidden_4 =Dense(hidden_size, activation='relu',kernel_initializer="he_uniform")(hidden_2)
+output_layer = Dense(input_size, activation='sigmoid')(hidden_2)
+
+autoencoder = Model(input_layer, output_layer)
+#variare learning_rate beta_1,beta_2, da fare per ultimo
+#batch_size ???
+autoencoder.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=0.006), loss='binary_crossentropy',metrics=["accuracy","Precision","Recall"])
+autoencoder.fit(x=train,y=train, epochs=1000,batch_size=90000, validation_data=(validation,validation), callbacks=my_callbacks,
+                      )
