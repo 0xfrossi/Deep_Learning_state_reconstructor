@@ -1,7 +1,0 @@
-relu
-hidden side 85
-code size 85
-patience 20
-input -> hidden 1 -> code -> hidden2 -> output
-epochs 5000
-batch size 5000
