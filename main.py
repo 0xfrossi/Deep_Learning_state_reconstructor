@@ -1,22 +1,19 @@
 import random
 import datetime, os
-import tensorflow as tf
-
-from tensorflow.keras.layers import Dense, Input
-from tensorflow.keras.models import Model
-
 from utils_functions import *
+from matplotlib import pyplot as plt
+import pandas as pd
+from pathlib import Path  
+import traceback
 
 """
 Caricamento dei dizionari e dei piani
 """
 
-print("1")
 
-dizionario_stati = load_file("./dizionario_stati")
-piani_caricati = load_file("./plans")
+#dizionario_stati = load_file("./dizionario_stati")
+#piani_caricati = load_file("./plans")
 
-print("2")
 
 """
 Definizione dei metodi di costruzione dei vettori da dare in pasto all'autoencoder
@@ -95,65 +92,68 @@ def crea_set(dizionario, piani, s_tr, s_te, s_va):
     else:
         return False
 
-print("3")
+#confronta posizione per posizione se i vettori sono uguali, se sono diversi errore++
+def check_singolo(input, decoded):
+    errore=0
+    decoded=np.round(decoded)
+    for i in range(len(input)):
+        if input[i]!=decoded[i]:
+            errore +=1
+    return errore
 
-logdir = os.path.join("logs", datetime.datetime.now().strftime("%Y%m%d-%H%M%S"))
-
-print("4")
-
-s_training = load_file("./set_training")
-s_test = load_file("./set_test")
-s_validation = load_file("./set_validation")
-
-print("5")
-
-if crea_set(dizionario_stati, piani_caricati, s_training, s_test, s_validation):
-    s_training = load_file("./set_training")
-    s_test = load_file("./set_test")
-    s_validation = load_file("./set_validation")
-
-"""
-Modello
-"""
-
-print("6")
-
-# Costante
-input_size = 340
-# Scelta casuale -> fare dei test
-hidden_size = 85
-code_size = 17
+#applica check_singolo per ogni vettore degli insiemi
+def compute_all_errors(inputSet,decodedSet):
+    l=len(inputSet)
+    errori_set=[]
+    for j in range(l):
+      n_errori= check_singolo(inputSet[j],decodedSet[j]) 
+      errori_set.append(n_errori)
+    errori_set= np.array(errori_set,dtype=np.int32) 
+    media= np.mean(errori_set) 
+    return  errori_set, media
 
 
-my_callbacks = [
-    tf.keras.callbacks.EarlyStopping(patience=10),
-    tf.keras.callbacks.TensorBoard(log_dir="C:/Users/lucal/PycharmProjects/Deep_Learning_Autoencoder/logsTB",histogram_freq=1)
-]
+def occorrenze(arr):
+    occ=np.bincount(arr)
+    # errore : occorrenza 
+    return dict(zip(arr,occ))
 
-print("7")
 
-# Cose da fare per migliorare la rete solo dopo aver fatto i primi tentativi con la rete proposta:
-# * Provare ad aggiungere Regolarizzazione es. L1,L2 e dropout(solo nella fase di encoding)
-# * Provare swish al posto di relu
-# * Provare keras.layers.BatchNormalization()
-# * Fare Hyperparameter Tuning  (ultima) www.tensorflow.org/tensorboard/hyperparameter_tuning_with_hparams
-# Salvare i risultati con ogni modifica fatta per scriverli nel report
+    
+#Aggiungi altre info utili in caso
+#input: inputSet- set originale per encoded, decoded- set encoded e decoded, dir- directory di tensorboard attuale
+#Restituisce info utili sui risultati della procedura di ae sul dataset provato, quali:
+# * num di vettori encoded e decoded correttamente
+# * num di valori non decofificati correttamente (errori) in un vettore, raggruppati in una lista per ogni vettore
+# * png, distribuzione del numero di errori per vettore su tutto il set in esame
 
-print("8")
+def results_info(inputSet,decodedSet,dir):
+    OCC="Occorrenze-  errori (elem della lista) : occorrenza\n"
+    #array_errori= lista che contiene il num di errori per ogni vettore del set in esame, errore= non corrispondenza tra 0 e 1
+    #ogni elemento della lista (errore) è calcolaro tramite 'check_singolo()'
+    array_errori, media=compute_all_errors(inputSet,decodedSet) 
+    l=len(inputSet)       
+    no=0
+    for i in array_errori:
+        if i==0:
+            no+=1
 
-input_layer = Input(shape=(input_size,))
-hidden_1 = Dense(hidden_size, activation='relu', kernel_initializer="he_uniform")(input_layer)
-code = Dense(code_size, activation='relu', kernel_initializer="he_uniform")(hidden_1)
-hidden_2 = Dense(hidden_size, activation='relu', kernel_initializer="he_uniform")(code)
-output_layer = Dense(input_size, activation='sigmoid')(hidden_2)
+    risultato="Numero di vettori decodificati correttamente: {0} su {1} totali \nRapporto: {2:.3f}% \nMedia num di errori per array: {3:.3f}\n".format(no, l, (no/l)*100 ,media)        
+    print(risultato)
 
-print("9")
+    occorr=occorrenze(array_errori)
 
-autoencoder = Model(input_layer, output_layer)
-# variare learning_rate beta_1,beta_2, da fare per ultimo
-# batch_size ???
-print("10")
-autoencoder.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=0.01), loss='binary_crossentropy', metrics=["accuracy", "Precision", "Recall"])
-print("11")
-autoencoder.fit(x=s_training, y=s_training, epochs=5000, batch_size=5000, validation_data=(s_validation, s_validation), callbacks=my_callbacks, verbose=1)
-print("12")
+    plt.hist(array_errori)
+    plt.xlabel("No of errors")
+    plt.ylabel("No of samples")
+    plt.show()
+    with open(dir+'/infoTest.txt', 'w') as f:
+        f.writelines([risultato,OCC,str(occorr)])
+        f.close()
+
+    plt.savefig(dir+'/distribuzione_errori.png',format='png')
+
+    return array_errori  
+
+
+
