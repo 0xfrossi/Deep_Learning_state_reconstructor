@@ -1,0 +1,24 @@
+param={"INPUT_SIZE" : 340,
+"HIDDEN_SIZE" : 170,
+"HIDDEN_SIZE2" : None,
+"CODE_SIZE" : 85,
+"KERNEL_INIZIALIZER":"he_uniform",
+"KERNEL_REGULIZER":None,
+'BIAS_REGULARIZER': None,
+"ACTIVATION":'relu',
+"OPTIMIZER":tf.keras.optimizers.Adam(learning_rate=0.001),
+"EPOCHS":1000,
+"BATCH_SIZE":7000,
+"BATCH_NORMAIZATION": 3
+}
+
+input_layer = Input(shape=(param["INPUT_SIZE"],))
+x = Dense(param["HIDDEN_SIZE"], activation=param["ACTIVATION"], kernel_initializer=param["KERNEL_INIZIALIZER"],kernel_regularizer=param["KERNEL_REGULIZER"], bias_regularizer=param["BIAS_REGULARIZER"] )(input_layer)
+#x = Dense(param["HIDDEN_SIZE2"], activation=param["ACTIVATION"], kernel_initializer=param["KERNEL_INIZIALIZER"],kernel_regularizer=param["KERNEL_REGULIZER"],bias_regularizer=param["BIAS_REGULARIZER"] )(x)
+x=tf.keras.layers.BatchNormalization()(x)
+code = Dense(param["CODE_SIZE"], activation=param["ACTIVATION"],kernel_initializer=param["KERNEL_INIZIALIZER"],kernel_regularizer=param["KERNEL_REGULIZER"],bias_regularizer=param["BIAS_REGULARIZER"])(x)
+x=tf.keras.layers.BatchNormalization()(code)
+#x =Dense(param["HIDDEN_SIZE2"], activation=param["ACTIVATION"],kernel_initializer=param["KERNEL_INIZIALIZER"],kernel_regularizer=param["KERNEL_REGULIZER"],bias_regularizer=param["BIAS_REGULARIZER"])(code)
+x =Dense(param["HIDDEN_SIZE"], activation=param["ACTIVATION"],kernel_initializer=param["KERNEL_INIZIALIZER"],kernel_regularizer=param["KERNEL_REGULIZER"],bias_regularizer=param["BIAS_REGULARIZER"])(x)
+x=tf.keras.layers.BatchNormalization()(x)
+output_layer = Dense(param["INPUT_SIZE"], activation='sigmoid')(x)
