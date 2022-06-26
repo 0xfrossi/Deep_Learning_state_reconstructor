@@ -10,3 +10,7 @@ set_validation
 20220625-193622/
 20220625-195837/
 20220626*
+
+__pycache__/
+
+.ipynb_checkpoints/

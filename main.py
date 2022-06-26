@@ -149,8 +149,9 @@ def results_info(input_set, decoded_set, directory):
     plt.hist(array_errori)
     plt.xlabel("No of errors")
     plt.ylabel("No of samples")
-    plt.gcf().savefig(dir+'/distribuzione_errori.jpg')
+    plt.gcf().savefig(directory+'/distribuzione_errori.jpg')
     plt.show()
+
     with open(directory + '/infoTest.txt', 'w') as f:
         f.writelines([risultato, occ, str(occorr)])
         f.close()
