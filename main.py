@@ -2,7 +2,7 @@ import random
 import datetime, os
 from utils_functions import *
 from matplotlib import pyplot as plt
-import pandas as pd
+# import pandas as pd
 from pathlib import Path  
 import traceback
 
@@ -11,8 +11,8 @@ Caricamento dei dizionari e dei piani
 """
 
 
-#dizionario_stati = load_file("./dizionario_stati")
-#piani_caricati = load_file("./plans")
+# dizionario_stati = load_file("./dizionario_stati")
+# piani_caricati = load_file("./plans")
 
 
 """
@@ -92,66 +92,67 @@ def crea_set(dizionario, piani, s_tr, s_te, s_va):
     else:
         return False
 
-#confronta posizione per posizione se i vettori sono uguali, se sono diversi errore++
-def check_singolo(input, decoded):
-    errore=0
-    decoded=np.round(decoded)
-    for i in range(len(input)):
-        if input[i]!=decoded[i]:
-            errore +=1
+
+# confronta posizione per posizione se i vettori sono uguali, se sono diversi errore++
+def check_singolo(input_check, decoded):
+    errore = 0
+    decoded = np.round(decoded)
+    for i in range(len(input_check)):
+        if input_check[i] != decoded[i]:
+            errore += 1
     return errore
 
-#applica check_singolo per ogni vettore degli insiemi
-def compute_all_errors(inputSet,decodedSet):
-    l=len(inputSet)
-    errori_set=[]
-    for j in range(l):
-      n_errori= check_singolo(inputSet[j],decodedSet[j]) 
-      errori_set.append(n_errori)
-    errori_set= np.array(errori_set,dtype=np.int32) 
-    media= np.mean(errori_set) 
-    return  errori_set, media
+
+# applica check_singolo per ogni vettore degli insiemi
+def compute_all_errors(input_set, decoded_set):
+    length = len(input_set)
+    errori_set = []
+    for j in range(length):
+        n_errori = check_singolo(input_set[j], decoded_set[j])
+        errori_set.append(n_errori)
+    errori_set = np.array(errori_set, dtype=np.int32)
+    media = np.mean(errori_set)
+    return errori_set, media
 
 
 def occorrenze(arr):
-    occ=np.bincount(arr)
+    occ = np.bincount(arr)
     # errore : occorrenza 
-    return dict(zip(arr,occ))
-
+    return dict(zip(arr, occ))
 
     
-#Aggiungi altre info utili in caso
-#input: inputSet- set originale per encoded, decoded- set encoded e decoded, dir- directory di tensorboard attuale
-#Restituisce info utili sui risultati della procedura di ae sul dataset provato, quali:
+# Aggiungi altre info utili in caso
+# input: input_set- set originale per encoded, decoded- set encoded e decoded, dir- directory di tensorboard attuale
+# Restituisce info utili sui risultati della procedura di ae sul dataset provato, quali:
 # * num di vettori encoded e decoded correttamente
 # * num di valori non decofificati correttamente (errori) in un vettore, raggruppati in una lista per ogni vettore
 # * png, distribuzione del numero di errori per vettore su tutto il set in esame
 
-def results_info(inputSet,decodedSet,dir):
-    OCC="Occorrenze-  errori (elem della lista) : occorrenza\n"
-    #array_errori= lista che contiene il num di errori per ogni vettore del set in esame, errore= non corrispondenza tra 0 e 1
-    #ogni elemento della lista (errore) è calcolaro tramite 'check_singolo()'
-    array_errori, media=compute_all_errors(inputSet,decodedSet) 
-    l=len(inputSet)       
-    no=0
+def results_info(input_set, decoded_set, directory):
+    occ = "Occorrenze-  errori (elem della lista) : occorrenza\n"
+    # array_errori= lista che contiene il num di errori per ogni vettore del set in esame, errore= non corrispondenza tra 0 e 1
+    # ogni elemento della lista (errore) è calcolaro tramite 'check_singolo()'
+    array_errori, media = compute_all_errors(input_set, decoded_set)
+    length = len(input_set)
+    no = 0
     for i in array_errori:
-        if i==0:
-            no+=1
+        if i == 0:
+            no += 1
 
-    risultato="Numero di vettori decodificati correttamente: {0} su {1} totali \nRapporto: {2:.3f}% \nMedia num di errori per array: {3:.3f}\n".format(no, l, (no/l)*100 ,media)        
+    risultato = "Numero di vettori decodificati correttamente: {0} su {1} totali \nRapporto: {2:.3f}% \nMedia num di errori per array: {3:.3f}\n".format(no, length, (no / length) * 100, media)
     print(risultato)
 
-    occorr=occorrenze(array_errori)
+    occorr = occorrenze(array_errori)
 
     plt.hist(array_errori)
     plt.xlabel("No of errors")
     plt.ylabel("No of samples")
     plt.show()
-    with open(dir+'/infoTest.txt', 'w') as f:
-        f.writelines([risultato,OCC,str(occorr)])
+    with open(directory + '/infoTest.txt', 'w') as f:
+        f.writelines([risultato, occ, str(occorr)])
         f.close()
 
-    plt.savefig(dir+'/distribuzione_errori.png',format='png')
+    plt.savefig(directory + '/distribuzione_errori.png', format='png')
 
     return array_errori  
 
