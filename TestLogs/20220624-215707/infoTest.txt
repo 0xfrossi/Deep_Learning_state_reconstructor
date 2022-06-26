@@ -1,5 +1,3 @@
 Numero di vettori decodicati correttamente: 0 su 230728 totali 
 Rapporto: 0.000 
 Media num di errori per array: 15.885
-Occorrenze-  errori (elem della lista) : occorrenza
-{16: 118, 18: 5197, 17: 415, 15: 13775, 14: 357, 13: 1634, 19: 37, 20: 13883, 12: 30938}

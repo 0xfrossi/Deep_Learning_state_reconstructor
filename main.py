@@ -5,7 +5,7 @@ from matplotlib import pyplot as plt
 import pandas as pd
 from pathlib import Path  
 import traceback
-
+from collections import Counter
 """
 Caricamento dei dizionari e dei piani
 """
@@ -114,9 +114,9 @@ def compute_all_errors(inputSet,decodedSet):
 
 
 def occorrenze(arr):
-    occ=np.bincount(arr)
+    
     # errore : occorrenza 
-    return dict(zip(arr,occ))
+    return Counter(arr)
 
 
     
@@ -143,16 +143,16 @@ def results_info(inputSet,decodedSet,dir):
 
     occorr=occorrenze(array_errori)
 
+    
     plt.hist(array_errori)
     plt.xlabel("No of errors")
     plt.ylabel("No of samples")
+    plt.gcf().savefig(dir+'/distribuzione_errori.jpg')
     plt.show()
     with open(dir+'/infoTest.txt', 'w') as f:
         f.writelines([risultato,OCC,str(occorr)])
         f.close()
-
-    plt.savefig(dir+'/distribuzione_errori.png',format='png')
-
+             
     return array_errori  
 
 

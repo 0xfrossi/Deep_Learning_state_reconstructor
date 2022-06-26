@@ -1,5 +1,3 @@
 Numero di vettori decodificati correttamente: 230203 su 230728 totali 
 Rapporto: 99.772% 
 Media num di errori per array: 0.003
-Occorrenze-  errori (elem della lista) : occorrenza
-{0: 1}
