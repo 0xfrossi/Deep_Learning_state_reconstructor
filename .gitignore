@@ -14,3 +14,4 @@ set_validation
 __pycache__/
 
 .ipynb_checkpoints/
+AutoencoderJupV2.ipynb
