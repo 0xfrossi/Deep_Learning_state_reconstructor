@@ -10,8 +10,9 @@ set_validation
 20220625-193622/
 20220625-195837/
 20220626*
-
+20220621*
+20220705*
 __pycache__/
-
+Dataset/
 .ipynb_checkpoints/
 AutoencoderJupV2.ipynb

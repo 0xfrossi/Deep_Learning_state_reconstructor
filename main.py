@@ -6,6 +6,7 @@ from matplotlib import pyplot as plt
 from pathlib import Path  
 import traceback
 from collections import Counter
+from plan import *
 """
 Caricamento dei dizionari e dei piani
 """
@@ -24,24 +25,26 @@ def costruisci_vettore(dizionario, lista_stati):
     lunghezza_dizionario = len(dizionario)
     vettore_stati = []
     for stato in lista_stati:
-        vettore = [0] * np.array([0]*lunghezza_dizionario, dtype=np.int8)
+        #vettore = np.array([0]*lunghezza_dizionario, dtype=np.int8)
+        vettore = [0]*lunghezza_dizionario
         for s in stato:
             for key in dizionario.keys():
                 if key == s:
                     vettore[dizionario[key] - 1] = 1
                     break
         vettore_stati.append(vettore)
-    r = np.array(vettore_stati)
+    r = np.array(vettore_stati, dtype=np.int8)
     return r
 
 
 # NON UTILIZZATO ADESSO
 # shape di ogni singolo elemento (r) è (n x 340) con n che varia su ogni piano, raggruppati sulla base dei piani
-def costruisci_tutti_vettori(dizionario, lista_piani):
+def costruisci_vettore_per_piano(dizionario, lista_piani):
     total = []
     for piano in lista_piani:
         r = costruisci_vettore(dizionario, piano.states)
         total.append(r)
+    total=np.array(total)
     return total
 
 
@@ -66,6 +69,20 @@ def costruisci_tutti_vettori_1x340(dizionario, lista_piani):
 """
 Preparazione dei dati
 """
+def crea_sets_v2(lista_stati):
+    random.shuffle(lista_stati)
+    split = int(len(lista_stati)//3)
+    train_set_v2 = lista_stati[split:]
+    vt = lista_stati[:split]
+    sub_split = int(len(vt)//2)
+    validation_set_v2 = vt[sub_split:]
+    test_set_v2 = vt[:sub_split]
+    save_file(train_set_v2, "./Dataset/", "set_training_v2")
+    save_file(validation_set_v2, "./Dataset/", "set_validation_v2")
+    save_file(test_set_v2, "./Dataset/", "set_test_v2")
+    return True
+
+
 
 
 def crea_set(dizionario, piani, s_tr, s_te, s_va):
@@ -91,6 +108,7 @@ def crea_set(dizionario, piani, s_tr, s_te, s_va):
         return True
     else:
         return False
+
 
 
 # confronta posizione per posizione se i vettori sono uguali, se sono diversi errore++
