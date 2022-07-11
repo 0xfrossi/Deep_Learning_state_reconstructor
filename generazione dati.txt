@@ -1,0 +1,24 @@
+Preparazione dati
+	Caricamento dataset statici
+	corpus = train
+	v = len(train)
+	window_size = 2
+
+Preparazione dati per CBOW
+	def generate_data_cbow(corpus, window_size, v):
+    		sequenze = []
+	
+		per ciascun vector e il suo indice
+			start = 2 vettori prima (indice-windows_size)
+			end = 2 vettori dopo (indice+windows_size+1)
+
+			vettori_di_contesto = []
+			per i nel range(start, end):
+				if i != indice: #salto il vec_0
+					append il vettore di indice i-esimo a vettori_di_contesto
+
+			appendo vettori_di_contesto a sequenze
+			
+	generate_data_cbow(corpus, window_size, v)
+	
+
