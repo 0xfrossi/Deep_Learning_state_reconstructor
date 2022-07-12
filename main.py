@@ -44,7 +44,7 @@ def costruisci_vettore_per_piano(dizionario, lista_piani):
     for piano in lista_piani:
         r = costruisci_vettore(dizionario, piano.states)
         total.append(r)
-    total=np.array(total)
+    total=np.array(total,dtype=object)
     return total
 
 
@@ -62,7 +62,7 @@ def costruisci_tutti_vettori_1x340(dizionario, lista_piani):
                         vettore[dizionario[key]-1] = 1
                         break
             total.append(vettore)
-    total = np.array(total)
+    total = np.array(total,dtype=object)
     return total
 
 
@@ -205,5 +205,24 @@ def results_info(input_set, decoded_set, directory):
              
     return array_errori  
 
-
+#Crea un dataset frammentando i piani, con un sample di dim 5x340
+def dataset_augmentation(data):
+    new_dataset=[]
+    simple_5=[]
+    for piano in data:
+        simple_5.clear()
+        count=0
+        for stato in piano:
+            count+=1
+            if count<=5:
+                simple_5.append(stato)
+                
+            if count==5:
+                simple_np=np.array(simple_5)
+                new_dataset.append(simple_np)
+                del simple_np
+                simple_5.clear()
+                count=0
+    
+    return np.array(new_dataset,dtype=object)   
 
