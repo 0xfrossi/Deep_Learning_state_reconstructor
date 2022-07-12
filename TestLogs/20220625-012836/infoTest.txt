@@ -1,3 +1,0 @@
-Numero di vettori decodificati correttamente: 0 su 230728 totali 
-Rapporto: 0.000% 
-Media num di errori per array: 15.890
