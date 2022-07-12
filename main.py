@@ -66,9 +66,42 @@ def costruisci_tutti_vettori_1x340(dizionario, lista_piani):
     return total
 
 
+window_size = 2
+
+
+def crea_vettori_finestre(dizionario, lista_piani, dimensione_finestra):
+    finestre = []
+    outputs = []
+    tutti_vettori_1x340 = costruisci_tutti_vettori_1x340(dizionario, lista_piani)
+
+    for vett in tutti_vettori_1x340:
+        indice = tutti_vettori_1x340.index(vett)
+        if indice == 0 or indice == 1 or indice == len(tutti_vettori_1x340)-2 or indice == len(tutti_vettori_1x340)-1:
+            continue  # se non posso prendere 2 vettori prima, o due vettori poi, non lo prendo, non può essere un output
+        else:
+            start = indice - dimensione_finestra  # 2 prima del corrente
+            end = indice + dimensione_finestra  # 2 dopo il corrente
+            vettore_finestra = []
+            for i in range(start, end):
+                if i == indice:
+                    outputs.append(
+                        tutti_vettori_1x340[i])  # se è il vettore centrale, la Seq0 dell'immagine di riferimento
+                    # allora è un autput della finestra, e lo aggiungo al vettore degli
+                    # output
+                else:
+                    vettore_finestra.append(
+                        tutti_vettori_1x340[i])  # se è Seq-2, o Seq-1, o Seq+1, o Seq+2, lo aggiungo al
+                    # vettore finestra
+        finestre.append(vettore_finestra)
+
+    return finestre, outputs
+
+
 """
 Preparazione dei dati
 """
+
+
 def crea_sets_v2(lista_stati):
     random.shuffle(lista_stati)
     split = int(len(lista_stati)//3)
@@ -81,8 +114,6 @@ def crea_sets_v2(lista_stati):
     save_file(validation_set_v2, "./Dataset/", "set_validation_v2")
     save_file(test_set_v2, "./Dataset/", "set_test_v2")
     return True
-
-
 
 
 def crea_set(dizionario, piani, s_tr, s_te, s_va):
@@ -108,7 +139,6 @@ def crea_set(dizionario, piani, s_tr, s_te, s_va):
         return True
     else:
         return False
-
 
 
 # confronta posizione per posizione se i vettori sono uguali, se sono diversi errore++
@@ -137,7 +167,6 @@ def occorrenze(arr):
     
     # errore : occorrenza 
     return Counter(arr)
-
 
     
 # Aggiungi altre info utili in caso
