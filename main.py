@@ -195,3 +195,55 @@ def dataset_augmentation(data):
     
     return np.array(new_dataset, dtype=object)
 
+def crea_sets_parte2(dataset_gruppi_da_5):
+    random.shuffle(dataset_gruppi_da_5)
+    split = int(len(dataset_gruppi_da_5)//3)
+    train = dataset_gruppi_da_5[split:]
+    val_test = dataset_gruppi_da_5[:split]
+    sub_split = int(len(val_test)//2)
+    validation = val_test[sub_split:]
+    test = val_test[:sub_split]
+    
+    l_train_x = []
+    l_validation_x = []
+    l_test_x = []
+    
+    l_train_y = []
+    l_validation_y = []
+    l_test_y = []
+    
+    for t in train: # scorro ogni quintupla
+        l_train_y.append(t[2]) # metto l'elemento centrale della quintupla nel set y
+        list_t = t.tolist()
+        list_t.remove(list_t[2]) # elimino l'elemento centrale dalla quintupla
+        l_train_x.append(list_t) # aggiungo la quadrupla al set x
+        
+    for v in validation: # scorro ogni quintupla
+        l_validation_y.append(v[2]) # metto l'elemento centrale della quintupla nel set y
+        list_v = v.tolist()
+        list_v.remove(list_v[2]) # elimino l'elemento centrale dalla quintupla
+        l_validation_x.append(list_v) # aggiungo la quadrupla al set x
+        
+    for te in test: # scorro ogni quintupla
+        l_test_y.append(te[2]) # metto l'elemento centrale della quintupla nel set y
+        list_te = te.tolist()
+        list_te.remove(list_te[2]) # elimino l'elemento centrale dalla quintupla
+        l_test_x.append(list_te) # aggiungo la quadrupla al set x
+    
+    train_x = np.array(l_train_x,dtype=np.int8)
+    validation_x = np.array(l_validation_x,dtype=np.int8)
+    test_x = np.array(l_test_x,dtype=np.int8)
+    
+    train_y = np.array(l_train_y,dtype=np.int8)
+    validation_y = np.array(l_validation_y,dtype=np.int8)
+    test_y = np.array(l_test_y,dtype=np.int8)
+    
+    save_file(train_x, "./Dataset_Parte2/", "set_training_x")
+    save_file(validation_x, "./Dataset_Parte2/", "set_validation_x")
+    save_file(test_x, "./Dataset_Parte2/", "set_test_x")
+    
+    save_file(train_y, "./Dataset_Parte2/", "set_training_y")
+    save_file(validation_y, "./Dataset_Parte2/", "set_validation_y")
+    save_file(test_y, "./Dataset_Parte2/", "set_test_y")
+    
+    return True
