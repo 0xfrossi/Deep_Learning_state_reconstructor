@@ -37,14 +37,13 @@ def costruisci_vettore(dizionario, lista_stati):
     return r
 
 
-# NON UTILIZZATO ADESSO
 # shape di ogni singolo elemento (r) è (n x 340) con n che varia su ogni piano, raggruppati sulla base dei piani
 def costruisci_vettore_per_piano(dizionario, lista_piani):
     total = []
     for piano in lista_piani:
         r = costruisci_vettore(dizionario, piano.states)
         total.append(r)
-    total=np.array(total,dtype=object)
+    total = np.array(total, dtype=object)
     return total
 
 
@@ -64,37 +63,6 @@ def costruisci_tutti_vettori_1x340(dizionario, lista_piani):
             total.append(vettore)
     total = np.array(total,dtype=object)
     return total
-
-
-window_size = 2
-
-
-def crea_vettori_finestre(dizionario, lista_piani, dimensione_finestra):
-    finestre = []
-    outputs = []
-    tutti_vettori_1x340 = costruisci_tutti_vettori_1x340(dizionario, lista_piani)
-
-    for vett in tutti_vettori_1x340:
-        indice = tutti_vettori_1x340.index(vett)
-        if indice == 0 or indice == 1 or indice == len(tutti_vettori_1x340)-2 or indice == len(tutti_vettori_1x340)-1:
-            continue  # se non posso prendere 2 vettori prima, o due vettori poi, non lo prendo, non può essere un output
-        else:
-            start = indice - dimensione_finestra  # 2 prima del corrente
-            end = indice + dimensione_finestra  # 2 dopo il corrente
-            vettore_finestra = []
-            for i in range(start, end):
-                if i == indice:
-                    outputs.append(
-                        tutti_vettori_1x340[i])  # se è il vettore centrale, la Seq0 dell'immagine di riferimento
-                    # allora è un autput della finestra, e lo aggiungo al vettore degli
-                    # output
-                else:
-                    vettore_finestra.append(
-                        tutti_vettori_1x340[i])  # se è Seq-2, o Seq-1, o Seq+1, o Seq+2, lo aggiungo al
-                    # vettore finestra
-        finestre.append(vettore_finestra)
-
-    return finestre, outputs
 
 
 """
@@ -205,24 +173,25 @@ def results_info(input_set, decoded_set, directory):
              
     return array_errori  
 
-#Crea un dataset frammentando i piani, con un sample di dim 5x340
+
+# Crea un dataset frammentando i piani, con un sample di dim 5x340
 def dataset_augmentation(data):
-    new_dataset=[]
-    simple_5=[]
+    new_dataset = []
+    simple_5 = []
     for piano in data:
         simple_5.clear()
-        count=0
+        count = 0
         for stato in piano:
-            count+=1
-            if count<=5:
+            count += 1
+            if count <= 5:
                 simple_5.append(stato)
                 
-            if count==5:
-                simple_np=np.array(simple_5)
+            if count == 5:
+                simple_np = np.array(simple_5)
                 new_dataset.append(simple_np)
                 del simple_np
                 simple_5.clear()
-                count=0
+                count = 0
     
-    return np.array(new_dataset,dtype=object)   
+    return np.array(new_dataset, dtype=object)
 
