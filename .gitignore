@@ -13,3 +13,9 @@ Dataset/
 .ipynb_checkpoints/
 AutoencoderJupV2.ipynb
 *.pcy
+Dataset_Parte2/set_test_x
+Dataset_Parte2/set_test_y
+Dataset_Parte2/set_training_x
+Dataset_Parte2/set_training_y
+Dataset_Parte2/set_validation_x
+Dataset_Parte2/set_validation_y
