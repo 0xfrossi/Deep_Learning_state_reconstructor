@@ -141,3 +141,6 @@ Numero di vettori decodificati correttamente: 41432 su 51231 totali
 Rapporto: 80.873% 
 Media num di errori per array: 0.483
 ECCOLO L'80%! a QUESTO PUNTO PROCEDO A TESTARE LA REGOLARIZZAZIONE.
+
+
+
