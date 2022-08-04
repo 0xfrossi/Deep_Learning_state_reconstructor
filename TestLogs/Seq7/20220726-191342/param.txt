@@ -1,0 +1,18 @@
+train loss 0.0056023565120995045 and parameters: {'learning rate': 0.0003700088651332496, 'reg param': 1.967657265571901e-06, 'dropout iniziale': 0.05, 'dropout finale': 0.05}
+
+accuracy: 0.0953 - precision: 0.9920 - recall: 0.9886 - val_loss: 0.0117 - val_accuracy: 0.0663 - val_precision: 0.9802 - val_recall: 0.9754
+
+ param={    "INPUT_SIZE" : "6,340",          
+            "HIDDEN_SIZE" : 1020,
+            "HIDDEN_SIZE2" : 510,
+            "HIDDEN_SIZE3" : 255,
+            "CODE_SIZE" : 200,
+            "HIDDEN_SIZE3" : 255,
+            "OUTPUT_SIZE":340,
+            "KERNEL_INIZIALIZER":"he_normal",
+            "KERNEL_REGULIZER":tf.keras.regularizers.L2(l2=reg),
+            'BIAS_REGULARIZER': None,
+            "ACTIVATION":"relu",
+            "OPTIMIZER":tf.keras.optimizers.Adam(learning_rate=l_rate),
+            "EPOCHS":500,
+            "BATCH_SIZE":1000,

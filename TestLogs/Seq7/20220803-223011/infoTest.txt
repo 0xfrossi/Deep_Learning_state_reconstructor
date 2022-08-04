@@ -1,0 +1,22 @@
+Numero di vettori decodificati correttamente: 21426 su 33459 totali 
+Rapporto: 64.037% 
+Media num di errori per array: 0.781
+Occorrenze-  errori (elem della lista) : occorrenza
+Counter({0: 21426, 1: 5775, 2: 2774, 3: 1524, 4: 906, 5: 426, 6: 219, 7: 196, 8: 142, 9: 47, 10: 17, 11: 4, 12: 3})
+
+param={"INPUT_SIZE" : "6,340" , 
+"OUTPUT_SIZE":340,
+"HIDDEN_SIZE" : 1020,
+"HIDDEN_SIZE2" : None,
+"HIDDEN_SIZE3" : None,
+"CODE_SIZE" : 510,
+#"he_uniform"
+"KERNEL_INIZIALIZER":"he_normal",
+"KERNEL_REGULIZER":None,
+'BIAS_REGULARIZER': None,
+"ACTIVATION":"relu",
+"OPTIMIZER":tf.keras.optimizers.Nadam(learning_rate=0.01,beta_1=0.95,beta_2=0.999),
+"EPOCHS":400,
+"BATCH_SIZE":400,
+# "BATCH_NORMALIZATION": 4
+}

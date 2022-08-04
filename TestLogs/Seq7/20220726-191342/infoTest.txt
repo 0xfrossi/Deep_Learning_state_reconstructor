@@ -1,0 +1,5 @@
+Numero di vettori decodificati correttamente: 23307 su 33459 totali 
+Rapporto: 69.658% 
+Media num di errori per array: 0.721
+Occorrenze-  errori (elem della lista) : occorrenza
+Counter({0: 23307, 1: 4507, 2: 2242, 3: 1283, 4: 919, 5: 470, 6: 265, 7: 205, 8: 171, 9: 64, 11: 12, 10: 12, 12: 2})
