@@ -1,0 +1,117 @@
+20220724-120127:
+#PARAM:
+#tf.keras.regularizers.L1(l1=1e-4)
+param={"INPUT_SIZE" : 340,
+"HIDDEN_SIZE" : 170,
+"HIDDEN_SIZE2" : None,
+"HIDDEN_SIZE3" : None,
+"CODE_SIZE" : 48,
+"KERNEL_INIZIALIZER":"he_uniform",
+"KERNEL_REGULIZER":tf.keras.regularizers.L2(l2=1e-5),
+'BIAS_REGULARIZER': None,
+"ACTIVATION":'relu',
+"OPTIMIZER":tf.keras.optimizers.Adam(learning_rate=0.0001),
+"EPOCHS":2000,
+"BATCH_SIZE":150,
+#"BATCH_NORMAIZATION": 0
+}
++ batch norm default
+Risultati:
+Numero di vettori decodificati correttamente: 161064 su 230728 totali 
+Rapporto: 69.807% 
+Media num di errori per array: 0.612
+
+
+20220729-084946:
+#PARAM:
+#tf.keras.regularizers.L1(l1=1e-4)
+param={"INPUT_SIZE" : 340,
+"HIDDEN_SIZE" : 170,
+"HIDDEN_SIZE2" : None,
+"HIDDEN_SIZE3" : None,
+"CODE_SIZE" : 60,
+"KERNEL_INIZIALIZER":"he_uniform",
+"KERNEL_REGULIZER":tf.keras.regularizers.L2(l2=1e-5),
+'BIAS_REGULARIZER': None,
+"ACTIVATION":'relu',
+"OPTIMIZER":tf.keras.optimizers.Adam(learning_rate=0.0001),
+"EPOCHS":2000,
+"BATCH_SIZE":150,
+#"BATCH_NORMAIZATION": 0
+}
++ batch norm default
+Risultati:
+Numero di vettori decodificati correttamente: 185977 su 230728 totali 
+Rapporto: 80.604% 
+Media num di errori per array: 0.338
+
+
+20220729-114606:
+#PARAM:
+#tf.keras.regularizers.L1(l1=1e-4)
+param={"INPUT_SIZE" : 340,
+"HIDDEN_SIZE" : 170,
+"HIDDEN_SIZE2" : None,
+"HIDDEN_SIZE3" : None,
+"CODE_SIZE" : 65,
+"KERNEL_INIZIALIZER":"he_uniform",
+"KERNEL_REGULIZER":tf.keras.regularizers.L2(l2=1e-5),
+'BIAS_REGULARIZER': None,
+"ACTIVATION":'relu',
+"OPTIMIZER":tf.keras.optimizers.Adam(learning_rate=0.0001),
+"EPOCHS":2000,
+"BATCH_SIZE":150,
+#"BATCH_NORMAIZATION": 0
+}
++ batch norm default
+Risultati:
+Numero di vettori decodificati correttamente: 197647 su 230728 totali 
+Rapporto: 85.662% 
+Media num di errori per array: 0.23
+
+
+20220729-143933:
+#PARAM:
+#tf.keras.regularizers.L1(l1=1e-4)
+param={"INPUT_SIZE" : 340,
+"HIDDEN_SIZE" : 170,
+"HIDDEN_SIZE2" : None,
+"HIDDEN_SIZE3" : None,
+"CODE_SIZE" :70,
+"KERNEL_INIZIALIZER":"he_uniform",
+"KERNEL_REGULIZER":tf.keras.regularizers.L2(l2=1e-5),
+'BIAS_REGULARIZER': None,
+"ACTIVATION":'relu',
+"OPTIMIZER":tf.keras.optimizers.Adam(learning_rate=0.0001),
+"EPOCHS":2000,
+"BATCH_SIZE":150,
+#"BATCH_NORMAIZATION": 0
+}
++ batch norm default
+Risultati:
+Numero di vettori decodificati correttamente: 203978 su 230728 totali 
+Rapporto: 88.406% 
+Media num di errori per array: 0.181
+
+20220729-172616:
+#PARAM:
+#tf.keras.regularizers.L1(l1=1e-4)
+param={"INPUT_SIZE" : 340,
+"HIDDEN_SIZE" : 170,
+"HIDDEN_SIZE2" : None,
+"HIDDEN_SIZE3" : None,
+"CODE_SIZE" :75,
+"KERNEL_INIZIALIZER":"he_uniform",
+"KERNEL_REGULIZER":tf.keras.regularizers.L2(l2=1e-5),
+'BIAS_REGULARIZER': None,
+"ACTIVATION":'relu',
+"OPTIMIZER":tf.keras.optimizers.Adam(learning_rate=0.0001),
+"EPOCHS":2000,
+"BATCH_SIZE":150,
+#"BATCH_NORMAIZATION": 0
+}
++ batch norm default
+Risultati:
+Numero di vettori decodificati correttamente: 208708 su 230728 totali 
+Rapporto: 90.456% 
+Media num di errori per array: 0.144
