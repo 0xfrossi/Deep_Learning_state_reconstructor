@@ -1,0 +1,22 @@
+Numero di vettori decodificati correttamente: 24527 su 33459 totali 
+Rapporto: 73.305% 
+Media num di errori per array: 0.659
+Occorrenze-  errori (elem della lista) : occorrenza
+Counter({0: 24527, 1: 3794, 2: 1948, 3: 1141, 4: 900, 5: 422, 6: 258, 7: 193, 8: 187, 9: 62, 10: 13, 11: 10, 13: 2, 12: 2})
+
+param={    "INPUT_SIZE" : "6,340",          
+            "HIDDEN_SIZE" : 1020,
+            "HIDDEN_SIZE2" : 510,
+            "HIDDEN_SIZE3" : 255,
+            "CODE_SIZE" : 200,
+            "HIDDEN_SIZE3" : 255,
+            "OUTPUT_SIZE":340,
+            "KERNEL_INIZIALIZER":"he_normal",
+            "KERNEL_REGULIZER":tf.keras.regularizers.L2(l2=1.967657265571901e-06),
+            'BIAS_REGULARIZER': None,
+            "ACTIVATION":"relu",
+            "OPTIMIZER":tf.keras.optimizers.Adam(learning_rate=0.0003700088651332496),
+            "EPOCHS":500,
+            "BATCH_SIZE":1000,
+            }
+            glorotuniform su sigmoide

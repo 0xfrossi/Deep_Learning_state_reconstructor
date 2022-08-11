@@ -92,6 +92,16 @@ def crea_set(dizionario, piani, s_tr, s_te, s_va):
     else:
         return False
 
+# confronta posizione per posizione se i vettori sono uguali, se sono diversi errore++
+def check_singolo(input_check, decoded):
+    errore = 0
+    decoded = np.round(decoded)
+    for i in range(len(input_check)):
+        if input_check[i] != decoded[i]:
+            errore += 1
+    return errore
+
+
 
 # applica check_singolo per ogni vettore degli insiemi
 def compute_all_errors(input_set, decoded_set):
